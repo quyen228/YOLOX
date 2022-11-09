@@ -224,7 +224,8 @@ class VOCDetection(Dataset):
         img_id = self.ids[index]
         img = cv2.imread(self._imgpath % img_id, cv2.IMREAD_COLOR)
         assert img is not None, f"file named {self._imgpath % img_id} not found"
-
+        img[:, :, 0] = img[:, :, 0]*1.5
+        
         return img
 
     def pull_item(self, index):
