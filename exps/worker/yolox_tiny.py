@@ -10,7 +10,7 @@ from yolox.exp import Exp as MyExp
 class Exp(MyExp):
     def __init__(self):
         super(Exp, self).__init__()
-        self.output_dir = "/content/drive/MyDrive/KNG/kiwi/model/kiwi/x1,5_BLUE"
+        self.output_dir = "/content/drive/MyDrive/KNG/human_retention/model"
         self.num_classes = 1
         self.max_epoch = 500
         self.depth = 0.33
