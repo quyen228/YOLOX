@@ -50,29 +50,34 @@ class AnnotationTransform(object):
             a list containing lists of bounding boxes  [bbox coords, class name]
         """
         res = np.empty((0, 5))
-        print(target.find("path").text)
+        
         for obj in target.iter("object"):
-            difficult = obj.find("difficult")
-            if difficult is not None:
-                difficult = int(difficult.text) == 1
-            else:
-                difficult = False
-            if not self.keep_difficult and difficult:
-                continue
-            name = obj.find("name").text.strip()
-            bbox = obj.find("bndbox")
+            try:
+                difficult = obj.find("difficult")
+                if difficult is not None:
+                    difficult = int(difficult.text) == 1
+                else:
+                    difficult = False
+                if not self.keep_difficult and difficult:
+                    continue
+                name = obj.find("name").text.strip()
+                bbox = obj.find("bndbox")
 
-            pts = ["xmin", "ymin", "xmax", "ymax"]
-            bndbox = []
-            for i, pt in enumerate(pts):
-                cur_pt = int(float(bbox.find(pt).text)) - 1
-                # scale height or width
-                # cur_pt = cur_pt / width if i % 2 == 0 else cur_pt / height
-                bndbox.append(cur_pt)
-            label_idx = self.class_to_ind[name]
-            bndbox.append(label_idx)
-            res = np.vstack((res, bndbox))  # [xmin, ymin, xmax, ymax, label_ind]
-            # img_id = target.find('filename').text[:-4]
+                pts = ["xmin", "ymin", "xmax", "ymax"]
+                bndbox = []
+                for i, pt in enumerate(pts):
+                    cur_pt = int(float(bbox.find(pt).text)) - 1
+                    # scale height or width
+                    # cur_pt = cur_pt / width if i % 2 == 0 else cur_pt / height
+                    bndbox.append(cur_pt)
+                label_idx = self.class_to_ind[name]
+                bndbox.append(label_idx)
+                res = np.vstack((res, bndbox))  # [xmin, ymin, xmax, ymax, label_ind]
+                # img_id = target.find('filename').text[:-4]
+            except:
+                with open("wrong.txt", "a") as f:
+                    f.write(f"{target.find("filename").text} \n")
+                continue
 
         width = int(target.find("size").find("width").text)
         height = int(target.find("size").find("height").text)
