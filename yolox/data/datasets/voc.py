@@ -50,7 +50,7 @@ class AnnotationTransform(object):
             a list containing lists of bounding boxes  [bbox coords, class name]
         """
         res = np.empty((0, 5))
-        print(target.iter("path"))
+        print(target.find("path").text)
         for obj in target.iter("object"):
             difficult = obj.find("difficult")
             if difficult is not None:
