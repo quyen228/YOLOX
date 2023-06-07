@@ -11,7 +11,7 @@ class Exp(MyExp):
     def __init__(self):
         super(Exp, self).__init__()
         self.output_dir = "/content/drive/MyDrive/KNG/pachinko/model"
-        self.num_classes = 1
+        self.num_classes = 3
         self.max_epoch = 500
         self.depth = 0.33
         self.width = 0.375
