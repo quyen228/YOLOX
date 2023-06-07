@@ -195,7 +195,7 @@ class VOCDetection(Dataset):
     def load_anno_from_ids(self, index):
         img_id = self.ids[index]
         target = ET.parse(self._annopath % img_id).getroot()
-        print(self._annopath)
+        print(img_id)
         assert self.target_transform is not None
         res, img_info = self.target_transform(target)
         height, width = img_info
