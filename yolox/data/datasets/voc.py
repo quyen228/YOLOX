@@ -75,8 +75,9 @@ class AnnotationTransform(object):
                 res = np.vstack((res, bndbox))  # [xmin, ymin, xmax, ymax, label_ind]
                 # img_id = target.find('filename').text[:-4]
             except:
+                img_id = target.find('filename').text[:-4]
                 with open("wrong.txt", "a") as f:
-                    f.write(f"{target.find("filename").text} \n")
+                    f.write(f"{img_id} \n")
                 continue
 
         width = int(target.find("size").find("width").text)
